@@ -6,39 +6,39 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-public class ViewData_Panel extends JPanel{
-    
+public class ViewData_Panel extends JPanel {
+
     JPanel options_panel = new JPanel();
-    
+
     JLabel website_lbl = new JLabel();
     JLabel email_lbl = new JLabel();
     public static JComboBox<String> website_cb = new JComboBox<>();
     public static JComboBox<String> email_cb = new JComboBox<>();
     public static JPasswordField password = new JPasswordField();
-    
+
     JCheckBox check = new JCheckBox();
-    String password_data="";
-    
-    public ViewData_Panel() 
-    {
+    String password_data = "";
+
+    public ViewData_Panel() {
         try {
             password_data = DatabaseConnectivity.viewData();
-        } catch (Exception ex){}
-        
+        } catch (Exception ex) {
+        }
+
         this.setLayout(new BorderLayout());
-        
+
         website_lbl.setText("Website:");
         website_lbl.setFont(new Font("Times New Roman", Font.BOLD, 30));
         website_lbl.setOpaque(true);
         website_lbl.setHorizontalAlignment(JLabel.CENTER);
-        
+
         website_cb.setSelectedIndex(-1);
-        
+
         email_lbl.setText("Email:");
         email_lbl.setFont(new Font("Times New Roman", Font.BOLD, 30));
         email_lbl.setOpaque(true);
         email_lbl.setHorizontalAlignment(JLabel.CENTER);
-        
+
         email_cb.setSelectedIndex(-1);
         email_cb.addActionListener((ActionEvent e) -> {
             password.setText(password_data);
@@ -48,27 +48,26 @@ public class ViewData_Panel extends JPanel{
         password.setOpaque(true);
         password.setHorizontalAlignment(JLabel.CENTER);
         password.setEditable(false);
-        
+
         check.setText("Show Password");
         check.setFont(new Font("Times New Roman", Font.BOLD, 25));
         check.setOpaque(true);
         check.setHorizontalAlignment(JLabel.CENTER);
         check.setPreferredSize(new Dimension(20, 20));
-        check.addActionListener(e -> 
-        {
+        check.addActionListener(e -> {
             JCheckBox c = (JCheckBox) e.getSource();
-            password.setEchoChar(c.isSelected() ? '\u0000' : (Character)UIManager.get("PasswordField.echoChar"));
+            password.setEchoChar(c.isSelected() ? '\u0000' : (Character) UIManager.get("PasswordField.echoChar"));
         });
-        
+
         options_panel.setBorder(new EmptyBorder(50, 50, 10, 50));
-        options_panel.setLayout(new GridLayout(3,2,0,10));
+        options_panel.setLayout(new GridLayout(3, 2, 0, 10));
         options_panel.add(website_lbl);
         options_panel.add(website_cb);
         options_panel.add(email_lbl);
         options_panel.add(email_cb);
         options_panel.add(password);
         options_panel.add(check);
-        
-        this.add(options_panel,BorderLayout.NORTH);
+
+        this.add(options_panel, BorderLayout.NORTH);
     }
 }
