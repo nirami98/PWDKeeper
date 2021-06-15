@@ -3,6 +3,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -21,9 +23,6 @@ public class ViewData_Panel extends JPanel{
     
     public ViewData_Panel() 
     {
-        try {
-            password_data = DatabaseConnectivity.viewData();
-        } catch (Exception ex){}
         
         this.setLayout(new BorderLayout());
         
@@ -33,18 +32,30 @@ public class ViewData_Panel extends JPanel{
         website_lbl.setHorizontalAlignment(JLabel.CENTER);
         
         website_cb.setSelectedIndex(-1);
+        website_cb.addActionListener((ActionEvent e) -> {
+            try{
+                DatabaseConnectivity.getEmail_View();
+                email_cb.setSelectedIndex(-1);
+            }
+            catch(Exception ex){}
+        });
+        
         
         email_lbl.setText("Email:");
         email_lbl.setFont(new Font("Times New Roman", Font.BOLD, 30));
         email_lbl.setOpaque(true);
         email_lbl.setHorizontalAlignment(JLabel.CENTER);
         
-        email_cb.setSelectedIndex(-1);
-        email_cb.addActionListener((ActionEvent e) -> {
-            password.setText(password_data);
-        });
 
-        password.setFont(new Font("Times New Roman", Font.BOLD, 30));
+        email_cb.addActionListener((ActionEvent e) -> {
+            try {
+                password_data = DatabaseConnectivity.viewData();
+                password.setText(password_data);
+            } catch (Exception ex) {}
+        });
+        
+        
+        password.setFont(new Font("Times New Roman", Font.BOLD, 25));
         password.setOpaque(true);
         password.setHorizontalAlignment(JLabel.CENTER);
         password.setEditable(false);

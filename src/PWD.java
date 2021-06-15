@@ -1,5 +1,9 @@
 import java.awt.event.*;
 import java.awt.*;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 public class PWD
@@ -76,8 +80,13 @@ public class PWD
         view_data.setFont(new Font("Times New Roman",Font.BOLD, 45));
         view_data.addActionListener(e -> 
         {
-            ViewData_Panel.website_cb.setSelectedIndex(-1);
-            ViewData_Panel.email_cb.setSelectedIndex(-1);
+            try {
+                DatabaseConnectivity.getWebsite_View();
+                ViewData_Panel.website_cb.setSelectedIndex(-1);
+                ViewData_Panel.email_cb.setSelectedIndex(-1);
+                ViewData_Panel.password.setText("");
+            } catch (Exception ex){}
+            
             status.setText("");
             name.setText("View Data");
             card.show(data, "viewPanel");
@@ -95,6 +104,12 @@ public class PWD
         delete_data.setFont(new Font("Times New Roman",Font.BOLD, 45));
         delete_data.addActionListener(e -> 
         {
+            try {
+                DatabaseConnectivity.getWebsite_Delete();
+                DeleteData_Panel.website_cb.setSelectedIndex(-1);
+                DeleteData_Panel.email_cb.setSelectedIndex(-1);
+            } catch (Exception ex){}
+            
             status.setText("");
             name.setText("Delete Data");
             card.show(data, "deletePanel");
@@ -134,6 +149,12 @@ public class PWD
     {
         @Override
         public void actionPerformed(ActionEvent e) {
+            try {
+                DatabaseConnectivity.getWebsite_Update();
+                UpdateData_Panel.website_cb.setSelectedIndex(-1);
+                UpdateData_Panel.email_cb.setSelectedIndex(-1);
+            } catch (Exception ex){}
+            
             status.setText("");
             name.setText("Update Data");
             card.show(data, "updatePanel");

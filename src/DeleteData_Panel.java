@@ -20,10 +20,7 @@ public class DeleteData_Panel extends JPanel{
     
     public DeleteData_Panel()
     {
-        try {
-            DatabaseConnectivity.displayDeleteData();
-        } catch (Exception ex){}
-        
+       
         this.setLayout(new BorderLayout());
         
         website_lbl.setText("Website:");
@@ -32,13 +29,18 @@ public class DeleteData_Panel extends JPanel{
         website_lbl.setHorizontalAlignment(JLabel.CENTER);
         
         website_cb.setSelectedIndex(-1);
+        website_cb.addActionListener((ActionEvent e) -> {
+            try{
+                DatabaseConnectivity.getEmail_Delete();
+                email_cb.setSelectedIndex(-1);
+            }
+            catch(Exception ex){}
+        });
         
         email_lbl.setText("Email:");
         email_lbl.setFont(new Font("Times New Roman", Font.BOLD, 30));
         email_lbl.setOpaque(true);
         email_lbl.setHorizontalAlignment(JLabel.CENTER);
-        
-        email_cb.setSelectedIndex(-1);
         
         submit_button.setFocusable(false);
         submit_button.setText("Delete data");

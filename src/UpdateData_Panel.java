@@ -26,9 +26,6 @@ public class UpdateData_Panel extends JPanel {
     
     public UpdateData_Panel()
     {
-        try {
-            DatabaseConnectivity.displayUpdateData();
-        } catch (Exception ex){}
         
         this.setLayout(new BorderLayout());
         
@@ -38,14 +35,19 @@ public class UpdateData_Panel extends JPanel {
         website_lbl.setHorizontalAlignment(JLabel.CENTER);
         
         website_cb.setSelectedIndex(-1);
+        website_cb.addActionListener((ActionEvent e) -> {
+            try{
+                DatabaseConnectivity.getEmail_Update();
+                email_cb.setSelectedIndex(-1);
+            }
+            catch(Exception ex){}
+        });
         
         email_lbl.setText("Email:");
         email_lbl.setFont(new Font("Times New Roman", Font.BOLD, 30));
         email_lbl.setOpaque(true);
         email_lbl.setHorizontalAlignment(JLabel.CENTER);
-        
-        email_cb.setSelectedIndex(-1);
-        
+
         dataemail_lbl.setText("Email:");
         dataemail_lbl.setFont(new Font("Times New Roman", Font.BOLD, 30));
         dataemail_lbl.setOpaque(true);
@@ -93,8 +95,19 @@ public class UpdateData_Panel extends JPanel {
             try {
                 DatabaseConnectivity.updateData();
             } catch (Exception ex) {
-                Logger.getLogger(UpdateData_Panel.class.getName()).log(Level.SEVERE, null, ex);
+                PWD.status.setText("An error has occured");
+                PWD.status.setFont(new Font("Times New Roman", Font.BOLD, 40));
+                PWD.status.setOpaque(true);
+                PWD.status.setHorizontalAlignment(JLabel.CENTER);
+                PWD.status.setForeground(Color.red);
+                ex.printStackTrace();
             }
+            check_email.setSelected(false);
+            email_text.setEditable(false);
+            check_password.setSelected(false);
+            password_text.setEditable(false);
+            email_text.setText(null);
+            password_text.setText(null);
         });
         
         options_panel.setBorder(new EmptyBorder(0, 50, 0, 50));
